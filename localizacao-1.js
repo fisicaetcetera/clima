@@ -1,5 +1,5 @@
 let url;
-let lat, lon;
+var Lat, Lon;
 let city;
 let estado;
 let country;
@@ -10,25 +10,28 @@ function setup(){
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        lat = data.location.latitude;
-        lon = data.location.longitude;
+        Lat = data.location.latitude;
+        Lon = data.location.longitude;
+        console.log(Lat, Lon);
         city = data.city.name;
         estado = data.state.name;
         country = data.country.name;
         continent = data.continent.name;
-        createP('Lat: ' + lat + ' Lon: ' + lon);
+        createP('Lat: ' + Lat + ' Lon: ' + Lon);
         createP(city +', '+ estado+', '+ country+', '+ continent);
-
+        New();
       }  
     )
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=-5.8111&longitude=-35.2235&current=temperature_2m,windspeed_10m&hourly=temperature_2m,relativehumidity_2m,windspeed_10m')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        createP('Temperature: ' +   data.current.temperature_2m + ' °C');
-        createP('Wind speed : ' + data.current.windspeed_10m + ' km/h')
-        createP('Elevation : ' + data.elevation + ' m')
-      }
-    )  
-  } //setup
-  
+    function New(){
+  console.log(Lat, Lon);
+  part1 = 'https://api.open-meteo.com/v1/forecast?';
+  part2 = 'latitude=' + Lat +'&longitude=' + Lon;
+  part3 = '&current=temperature_2m,windspeed_10m';
+  url = part1 + part2;
+  console.log(url);
+  loadJSON(url, gotData);
+  function gotData(data){
+  console.log(data);
+  }
+  }//New
+  }//setup
