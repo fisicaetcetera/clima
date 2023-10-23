@@ -15,23 +15,29 @@ function setup(){
         console.log(Lat, Lon);
         city = data.city.name;
         estado = data.state.name;
-        country = data.country.name;
+        country = data.country.iso_code;     
         continent = data.continent.name;
         createP('Lat: ' + Lat + ' Lon: ' + Lon);
         createP(city +', '+ estado+', '+ country+', '+ continent);
-        New();
+        createP('Country phone code: ' + data.country.phone_code);
+        getClima();
       }  
     )
-    function New(){
-  console.log(Lat, Lon);
-  part1 = 'https://api.open-meteo.com/v1/forecast?';
-  part2 = 'latitude=' + Lat +'&longitude=' + Lon;
-  part3 = '&current=temperature_2m,windspeed_10m';
-  url = part1 + part2;
+    function getClima(){
+  parte1 = 'https://api.openweathermap.org/data/2.5/weather?';
+  parte2 = 'q=' + city + ","+country;
+  parte3 = '&APPID=ce65c93f4ff8c6def108ec2e8cc95692';
+  parte4 = '&units=metric';
+  url = parte1 + parte2 + parte3 + parte4;
   console.log(url);
-  loadJSON(url, gotData);
-  function gotData(data){
-  console.log(data);
+  loadJSON(url, GotData);
+  function GotData(data){
+     console.log(data);
+     createP('Weather: ' + data.weather[0].description);
+     createP('Temperature (°C): ' + data.main.temp);
+     createP('Pressure: ' + data.main.pressure);
+     createP('Visibility (meters): ' + data.visibility);
   }
-  }//New
+  
+  }//getclima
   }//setup
