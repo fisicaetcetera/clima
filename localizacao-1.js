@@ -18,6 +18,7 @@ function setup(){
         country = data.country.iso_code;     
         continent = data.continent.name;
         createP('Lat: ' + Lat + ' Lon: ' + Lon);
+         if(city == 'Natal'){estado = 'RN';}
         createP(city +', '+ estado+', '+ country+', '+ continent);
         createP('Country phone code: ' + data.country.phone_code);
         getClima();
